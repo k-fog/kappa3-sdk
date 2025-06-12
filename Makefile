@@ -6,3 +6,8 @@ main.bin: main.elf
 
 main.elf: main.ld entry.s main.c
 	$(CC) $(CFLAGS) -T main.ld entry.s main.c -o $@
+
+clean:
+	rm main.bin main.elf
+
+.PHONY: clean
