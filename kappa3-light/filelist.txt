@@ -1,0 +1,17 @@
+src/alu.v
+src/controller.v
+src/debugger.v
+src/decode_7seg.v
+src/kappa3_light_core.v
+src/kappa3_light.v
+src/keybuf.v
+src/keyenc.v
+src/ldconv.v
+src/led_driver.v
+src/mem64kd.v
+src/memory.v
+src/phasegen.v
+src/reg32.v
+src/regfile.v
+src/stconv.v
+src/syncro.v
