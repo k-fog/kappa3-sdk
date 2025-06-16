@@ -1,7 +1,7 @@
 a.out
 *.vcd
-*vvp
-result.txt
+*.vvp
+test_tmp/
 
 src/alu.v
 src/controller.v
