@@ -1,5 +1,5 @@
 VCD info: dumpfile test.vcd opened for output.
-pc=0FFFFF00
+pc=0fffff00
 x00=00000000
 x01=00000000
 x02=00000000

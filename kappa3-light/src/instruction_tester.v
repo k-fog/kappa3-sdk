@@ -1,4 +1,3 @@
-`timescale 1ns/1ps
 
 module instruction_tester;
     reg clock, clock2;
@@ -102,8 +101,6 @@ module instruction_tester;
     task read_reg(input [4:0] reg_addr);
         begin
             dbg_reg_addr = reg_addr;
-            dbg_reg_ld = 1;
-            #10 dbg_reg_ld = 0;
             #10;
             $display("x%02d=%h", reg_addr, dbg_reg_out);
         end
@@ -189,7 +186,7 @@ module instruction_tester;
         #10 step_inst = 1;
         #10 step_inst = 0;
 
-        #100;
+        #200;
         print_state();
         $finish;
     end

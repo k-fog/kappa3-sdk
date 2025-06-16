@@ -17,5 +17,13 @@ assert() {
 }
 
 assert basic01_lui
+assert basic02_auipc
+assert basic03_jal
+# assert basic04_jalr
+assert basic05_beq
+assert basic06_beq
+assert basic07_blt
+assert basic08_blt
+assert basic09_blt
 
 echo "All tests passed !!!"
