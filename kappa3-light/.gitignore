@@ -1,5 +1,7 @@
 a.out
 *.vcd
+*vvp
+result.txt
 
 src/alu.v
 src/controller.v
@@ -18,3 +20,4 @@ src/reg32.v
 src/regfile.v
 src/stconv.v
 src/syncro.v
+

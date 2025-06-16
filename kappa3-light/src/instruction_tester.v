@@ -1,4 +1,6 @@
-module tester;
+`timescale 1ns/1ps
+
+module instruction_tester;
     reg clock, clock2;
     reg reset;
     reg run;
@@ -62,20 +64,28 @@ module tester;
     initial clock2 = 0;
     always @(posedge clock) clock2 <= ~clock2;
 
+    task read_pc;
+        begin
+            $display("pc=%h", dbg_pc_out);
+        end
+    endtask
+
     task write_pc(input [31:0] addr);
         begin
             dbg_in = addr;
-            dbg_pc_ld = 1;
+            #10 dbg_pc_ld = 1;
             #10 dbg_pc_ld = 0;
+            #20;
         end
     endtask
 
     task read_mem(input [31:0] addr);
         begin
             dbg_mem_addr = addr;
-            dbg_mem_read = 1;
+            #10 dbg_mem_read = 1;
             #10 dbg_mem_read = 0;
-            $display("%h: %h", addr, dbg_mem_out);
+            #20;
+            $display("%h=%h", addr, dbg_mem_out);
         end
     endtask
 
@@ -83,8 +93,9 @@ module tester;
         begin
             dbg_in = data;
             dbg_mem_addr = addr;
-            dbg_mem_write = 1;
+            #10 dbg_mem_write = 1;
             #10 dbg_mem_write = 0;
+            #20;
         end
     endtask
 
@@ -93,8 +104,8 @@ module tester;
             dbg_reg_addr = reg_addr;
             dbg_reg_ld = 1;
             #10 dbg_reg_ld = 0;
-            $display("x%02d: %h", reg_addr, dbg_reg_out);
             #10;
+            $display("x%02d=%h", reg_addr, dbg_reg_out);
         end
     endtask
 
@@ -104,12 +115,13 @@ module tester;
             dbg_reg_addr = reg_addr;
             dbg_reg_ld = 1;
             #10 dbg_reg_ld = 0;
+            #20;
         end
     endtask
 
-    task print_state();
+    task print_state;
         begin
-            $display("pc: %h", dbg_pc_out);
+            read_pc();
             read_reg(5'b00000); // x0
             read_reg(5'b00001); // x1
             read_reg(5'b00010); // x2
@@ -147,7 +159,7 @@ module tester;
 
     initial begin
         $dumpfile("test.vcd");
-        $dumpvars(0, tester);
+        $dumpvars(0, instruction_tester);
 
         // initialization
         reset = 1;
@@ -171,8 +183,7 @@ module tester;
         #5 reset = 1;
 
         // load test instruction
-        write_pc(32'h10000000);
-        write_mem(32'h10000000, 32'h123450B7);
+        `include "test_instruction.vh"
 
         // run the test instruction
         #10 step_inst = 1;
