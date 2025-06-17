@@ -110,7 +110,7 @@ module instruction_tester;
         begin
             dbg_in = data;
             dbg_reg_addr = reg_addr;
-            dbg_reg_ld = 1;
+            #10 dbg_reg_ld = 1;
             #10 dbg_reg_ld = 0;
             #20;
         end
