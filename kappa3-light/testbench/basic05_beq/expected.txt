@@ -1,4 +1,3 @@
-VCD info: dumpfile test.vcd opened for output.
 pc=10000100
 x00=00000000
 x01=00000000

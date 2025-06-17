@@ -8,7 +8,7 @@ assert() {
     mkdir -p test_tmp/$1
 
     iverilog -c filelist.txt src/instruction_tester.v -I testbench/$1 -o test_tmp/$1/instruction_tester.vvp
-    vvp test_tmp/$1/instruction_tester.vvp > test_tmp/$1/result.txt
+    vvp test_tmp/$1/instruction_tester.vvp | grep -v 'VCD info' | grep -v 'src/instruction_tester.v' > test_tmp/$1/result.txt
 
     if ! diff test_tmp/$1/result.txt testbench/$1/expected.txt; then
         echo "Output mismatch for $1"
