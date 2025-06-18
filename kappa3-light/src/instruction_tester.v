@@ -84,7 +84,7 @@ module instruction_tester;
             #10 dbg_mem_read = 1;
             #10 dbg_mem_read = 0;
             #20;
-            $display("%h=%h", addr, dbg_mem_out);
+            $display("M[%h]=%h", addr, dbg_mem_out);
         end
     endtask
 
@@ -188,6 +188,10 @@ module instruction_tester;
 
         #200;
         print_state();
+
+        `ifdef MEMOUT
+            `include "memout.vh"
+        `endif
         $finish;
     end
 endmodule
