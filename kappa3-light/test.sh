@@ -25,7 +25,7 @@ for test in `ls ./testbench`; do
 done
 
 if "$FAILED"; then
-    echo "\nSome test failed\n"
+    echo -e "\nSome test failed\n"
 else
-    echo "\nAll tests passed !!!\n"
+    echo -e "\nAll tests passed !!!\n"
 fi
