@@ -186,7 +186,7 @@ module program_tester;
         run = 1;
         #20 run = 0;
 
-        #5000;
+        #200000;
         print_state();
 
         $finish;

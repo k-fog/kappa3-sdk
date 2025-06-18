@@ -1,4 +1,11 @@
     .section .text
     .globl _start
 _start:
-    call main      # main() を呼び出す
+    la sp, stack_top      # スタックポインタを初期化
+    call main             # main() を呼び出す
+    j .
+
+    .section .bss
+    .align 4
+    .space 1024
+stack_top:
