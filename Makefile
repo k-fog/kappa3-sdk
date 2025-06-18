@@ -1,13 +1,18 @@
 CC=riscv64-unknown-elf-gcc
 CFLAGS=-march=rv32i -mabi=ilp32 -nostdlib -ffreestanding
 
+all: main.bin main.hex
+
+main.bin: main.elf
+	riscv64-unknown-elf-objcopy -O binary $< $@
+
 main.hex: main.elf
-	riscv64-unknown-elf-objcopy -O ihex $+ $@
+	riscv64-unknown-elf-objcopy -O ihex $< $@
 
 main.elf: main.ld entry.s main.c
 	$(CC) $(CFLAGS) -T main.ld entry.s main.c -o $@
 
 clean:
-	rm main.bin main.elf
+	rm -f main.elf main.bin main.hex
 
-.PHONY: clean
+.PHONY: all clean
