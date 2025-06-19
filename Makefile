@@ -1,5 +1,5 @@
 CC=riscv64-unknown-elf-gcc
-CFLAGS=-march=rv32i -mabi=ilp32 -nostdlib -ffreestanding
+CFLAGS=-Wall -O1 -march=rv32i -mabi=ilp32 -nostdlib -ffreestanding
 
 all: main.bin main.hex
 

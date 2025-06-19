@@ -187,7 +187,8 @@ module program_tester;
         #20 run = 0;
 
         #200000;
-        print_state();
+        // print_state();
+        read_reg(5'd10); // x10
 
         $finish;
     end
