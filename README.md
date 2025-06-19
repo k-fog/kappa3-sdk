@@ -1,6 +1,6 @@
 # kappa3-sdk
 
-## テスト
+## Tests
 
 Requirements
 ```sh
