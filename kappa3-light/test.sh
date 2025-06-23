@@ -15,7 +15,8 @@ assert() {
     if ! diff test_tmp/$1/result.txt testbench/$1/expected.txt; then
         echo "$1...FAILED"
         FAILED=true
-        return
+        # return
+        exit 1
     fi
     echo "$1...OK"
 }
