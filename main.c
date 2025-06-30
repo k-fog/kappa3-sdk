@@ -1,7 +1,12 @@
-int fib(int n) {
-    if (n <= 2) return 1;
-    else return fib(n - 2) + fib(n - 1);
-}
+#include "mu500lib.h"
+
 int main() {
-    return fib(10);
+    int i = 0;
+    while (true) {
+        write_7seg(i, 0x02);
+        for (int i = 0; i < 5; i++) asm("nop");
+        write_7seg(i, 0x00);
+        i = (i + 1) & 0x3f;
+    }
+    return 0;
 }
