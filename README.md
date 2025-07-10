@@ -1,7 +1,10 @@
 # kappa3-sdk
 
-[電気情報工学科C課程（CM）第3学年ハードウェア実験](https://github.com/kappa3-rv32i/hw2019)
-の課題をVerilogシミュレータを使って実施するための環境。授業資料のテストを自動化している。
+## リポジトリの内容
+
+1. [電気情報工学科C課程（CM）第3学年ハードウェア実験](https://github.com/kappa3-rv32i/hw2019)
+  の課題2（kappa3-lightの製作）をVerilogシミュレータを使って実施するための環境。授業資料のテストを自動化した。
+1. C言語をrv32iにコンパイルするためのスクリプト等（課題3で使用）
 
 ## Requirements
 動作確認環境：Ubuntu 22.04.5 LTS on WSL2
