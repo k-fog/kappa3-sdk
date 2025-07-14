@@ -100,14 +100,13 @@ uint8_t seg7_buf[SEG7_NUM];
 #define GAME 1
 #define GAMESET 2
 
-#define COOLTIME 3
+#define COOLTIME 5
 
 int gameState;
 int lifeA, lifeB;
 int cooltimeA, cooltimeB;
 uint16_t bulletA[4], bulletB[4]; 
 int AY, BY;
-unsigned int frameCount;
 
 void write_7seg_buf_digit(uint32_t offset, uint8_t digit) {
     switch (digit) {
@@ -135,95 +134,104 @@ void init(){
     gameState = TITLE;
     lifeA = 4;
     lifeB = 4;
-    AY = 3;
-    BY = 3;
+    AY = 0;
+    BY = 2;
     for(int i = 0; i < 4; i++) {
         bulletA[i] = 0;
         bulletB[i] = 0;
     }
-    frameCount = 0;
+    cooltimeA = cooltimeB = 0;
     return;
 }
 
 void title() {
-    write_7seg(0, 0xCE);//P
-    write_7seg(1, 0x38);//u
-    write_7seg(2, 0xB6);//S
-    write_7seg(3, 0x2E);//h
-    write_7seg(4, 0x3E);//b
-    write_7seg(5, 0xDB);//2.
-    write_7seg(6, 0x1A);//c
-    write_7seg(7, 0xDB);//2.
-    write_7seg(8, 0x00);
-    write_7seg(9, 0x00);
-    write_7seg(10, 0x00);
-    write_7seg(11, 0x00);
+    //line 1
+    write_7seg(0, 0x00);
+    write_7seg(1, 0x00);
+    write_7seg(2, 0x00);
+    write_7seg(3, 0x00);
+    write_7seg(4, 0xB6);  // S
+    write_7seg(5, 0x2E);  // h
+    write_7seg(6, 0x3A);  // o
+    write_7seg(7, 0x3A);  // o
+
+    write_7seg(8, 0x1E);   // t
+    write_7seg(9, 0x08);   // i
+    write_7seg(10, 0x2A);  // n
+    write_7seg(11, 0xBC);  // G
     write_7seg(12, 0x00);
     write_7seg(13, 0x00);
     write_7seg(14, 0x00);
     write_7seg(15, 0x00);
-    //line 2
+
+    // line 2
     write_7seg(16, 0x00);
-    write_7seg(17, 0x1E);//t
-    write_7seg(18, 0x3A);//o
+    write_7seg(17, 0x00);
+    write_7seg(18, 0x00);
     write_7seg(19, 0x00);
-    write_7seg(20, 0xCE);//P
-    write_7seg(21, 0x1C);//L
-    write_7seg(22, 0xEE);//A
-    write_7seg(23, 0x76);//y
-    write_7seg(24, 0x00);
-    write_7seg(25, 0x00);
-    write_7seg(26, 0x00);
+    write_7seg(20, 0x00);
+    write_7seg(21, 0x3E);  // b
+    write_7seg(22, 0xEE);  // A
+    write_7seg(23, 0x1E);  // t
+
+    write_7seg(24, 0x1E);  // t
+    write_7seg(25, 0x1C);  // L
+    write_7seg(26, 0x9E);  // E
     write_7seg(27, 0x00);
     write_7seg(28, 0x00);
     write_7seg(29, 0x00);
     write_7seg(30, 0x00);
     write_7seg(31, 0x00);
-    //line 3
-    write_7seg(32, 0x61);//1.
-    write_7seg(33, 0x00);
-    write_7seg(34, 0xB6);//S
-    write_7seg(35, 0x2E);//h
-    write_7seg(36, 0x3A);//o
-    write_7seg(37, 0x3A);//o
-    write_7seg(38, 0x1E);//t
-    write_7seg(39, 0x00);
-    write_7seg(40, 0x00);
+
+    // line 3
+    write_7seg(32, 0xCE);  // P
+    write_7seg(33, 0x38);  // u
+    write_7seg(34, 0xB6);  // S
+    write_7seg(35, 0x2E);  // h
+    write_7seg(36, 0x3E);  // b
+    write_7seg(37, 0xDB);  // 2.
+    write_7seg(38, 0x1A);  // c
+    write_7seg(39, 0xDB);  // 2.
+
+    write_7seg(40, 0x61);  // 1.
     write_7seg(41, 0x00);
-    write_7seg(42, 0x00);
-    write_7seg(43, 0x00);
-    write_7seg(44, 0x00);
-    write_7seg(45, 0x00);
-    write_7seg(46, 0x00);
+    write_7seg(42, 0xB6);  // S
+    write_7seg(43, 0x2E);  // h
+    write_7seg(44, 0x3A);  // o
+    write_7seg(45, 0x3A);  // o
+    write_7seg(46, 0x1E);  // t
     write_7seg(47, 0x00);
-    //line 4
-    write_7seg(48, 0xDB);//2.
-    write_7seg(49, 0x00);
-    write_7seg(50, 0x7A);//d
-    write_7seg(51, 0x3A);//o
-    write_7seg(52, 0x7A);//d
-    write_7seg(53, 0xBC);//G
-    write_7seg(54, 0x9E);//E
-    write_7seg(55, 0x00);
-    write_7seg(56, 0x00);
+
+    // line 4
+    write_7seg(48, 0x00);
+    write_7seg(49, 0x1E);  // t
+    write_7seg(50, 0x3A);  // o
+    write_7seg(51, 0x00);
+    write_7seg(52, 0xCE);  // P
+    write_7seg(53, 0x1C);  // L
+    write_7seg(54, 0xEE);  // A
+    write_7seg(55, 0x76);  // y
+
+    write_7seg(56, 0xDB);  // 2.
     write_7seg(57, 0x00);
-    write_7seg(58, 0x00);
-    write_7seg(59, 0x00);
-    write_7seg(60, 0x00);
-    write_7seg(61, 0x00);
-    write_7seg(62, 0x00);
+    write_7seg(58, 0x7A);  // d
+    write_7seg(59, 0x3A);  // o
+    write_7seg(60, 0x7A);  // d
+    write_7seg(61, 0xBC);  // G
+    write_7seg(62, 0x9E);  // E
     write_7seg(63, 0x00);
     if (get_pswitch(7) == 1 && get_pswitch(12) == 1) {
+        init();
         gameState = GAME;
     }
 }
 
 void gameUpdate() {
     bool a_up = get_pswitch(1);
-    bool a_shoot = get_pswitch(11);
+    bool a_shoot = get_pswitch(6) || get_pswitch(11);
     bool a_down = get_pswitch(16);
     bool b_up = get_pswitch(4);
-    bool b_shoot = get_pswitch(9);
+    bool b_shoot = get_pswitch(9) || get_pswitch(14);
     bool b_down = get_pswitch(19);
     if (a_up) AY -= 1;
     else if (a_down) AY += 1;
@@ -246,11 +254,9 @@ void gameUpdate() {
     if ((bulletB[AY] >> 15 & 1) == 1) lifeA -= 1;
 
 
-    if ((frameCount & 0xFF) == 0) {
-        for (int i = 0; i < 4; i++) {
-            bulletA[i] >>= 1;        
-            bulletB[i] <<= 1;        
-        }
+    for (int i = 0; i < 4; i++) {
+        bulletA[i] >>= 1;        
+        bulletB[i] <<= 1;        
     }
 
     if (lifeA < 0 || lifeB < 0) gameState = GAMESET;
@@ -427,7 +433,6 @@ int main() {
     init();
     while (true) {
         if (gameState == TITLE) {
-            init();
             title();
         }
         else if (gameState == GAME) {
